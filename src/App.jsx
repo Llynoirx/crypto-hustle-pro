@@ -20,6 +20,11 @@ function App() {
   return (
   <div className="whole-page">
     <h1>My Crypto List</h1>
+    <input
+      type="text"
+      placeholder="Search..."
+      onChange={(inputString) => searchItems(inputString.target.value)}
+    />
       <ul>
       {list && Object.entries(list.Data).map(([coin]) => 
         list.Data[coin].PlatformType === "blockchain" ? 
