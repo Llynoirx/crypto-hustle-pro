@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import CoinInfo from "./Components/CoinInfo";
 import './App.css'
 
@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     const fetchAllCoinData = async() => {
-      let query = "https://min-api.cryptocompare.com/data/all/coinlist?&api_key"+API_KEY;
+      let query = `https://min-api.cryptocompare.com/data/all/coinlist?&api_key=${API_KEY}`;
       const response = await fetch(query);
       const json = await response.json();
       setList(json);
@@ -41,6 +41,7 @@ function App() {
       type="text"
       placeholder="Search..."
       onChange={(inputString) => searchItems(inputString.target.value)} />
+
       {searchInput.length > 0
       ? filteredResults.map((coin) => 
           list.Data[coin].PlatformType === "blockchain" ? 
@@ -49,19 +50,17 @@ function App() {
             name={list.Data[coin].FullName}
             symbol={list.Data[coin].Symbol}
           />
-          : null
-        )
-      : list && Object.entries(list.Data).map(([coin]) => 
-          list.Data[coin].PlatformType === "blockchain" ? 
-          <CoinInfo
-            image={list.Data[coin].ImageUrl}
-            name={list.Data[coin].FullName}
-            symbol={list.Data[coin].Symbol}
-          />
-      : null
-    )}
+          : null) 
+            : list && Object.entries(list.Data).map(([coin]) => 
+              list.Data[coin].PlatformType === "blockchain" ? 
+              <CoinInfo
+                image={list.Data[coin].ImageUrl}
+                name={list.Data[coin].FullName}
+                symbol={list.Data[coin].Symbol}
+              />
+              : null)}
+  </div>
   );
 }
 
 export default App
-
